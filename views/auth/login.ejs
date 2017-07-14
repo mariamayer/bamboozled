@@ -14,6 +14,12 @@
   </div>
 </form>
 
-<p class="account-message">
-  Dont have an account? <a href="/signup">Sign up</a>
-</p>
+<br><br>
+<% if (typeof errorMessage !== "undefined") { %>
+  <div class="error-message"><%= errorMessage %></div>
+  <% } %>
+  <br><br>
+
+  <p class="account-message">
+    Dont have an account? <a href="/signup">Sign up</a>
+  </p>

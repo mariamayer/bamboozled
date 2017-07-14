@@ -5,14 +5,20 @@ const logger = require('morgan');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+
+const User = require('./models/user');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 const authRoutes = require('./routes/auth');
 
-const mongoose = require('mongoose');
+
 mongoose.connect('mongodb://localhost/bamboozled');
 
 const app = express();
@@ -28,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 app.use(session({
   secret: 'No clue? No problem.',
@@ -39,6 +46,37 @@ app.use(session({
     ttl: 24 * 60 * 60
   })
 }));
+
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findOne({ "_id": id }, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
+passport.use(new LocalStrategy((username, password, next) => {
+  User.findOne({ username }, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(null, false, { message: "Incorrect email" });
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return next(null, false, { message: "Incorrect password" });
+    }
+
+    return next(null, user);
+  });
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 app.use('/', index);

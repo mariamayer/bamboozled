@@ -1,5 +1,7 @@
 const express  = require('express');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user');
 
@@ -61,40 +63,15 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('auth/login', {
-    errorMessage: ''
-  });
+  res.render('auth/login');
 });
 
-router.post('/login', (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+  passReqToCallback: true
+}));
 
-  if (email === '' || password === '') {
-    res.render('auth/login', {
-      errorMessage: 'Please provide your email and password to login.'
-    });
-    return;
-  }
-
-  User.findOne({ email: email }, (err, myUser) => {
-    if (err || myUser === null) {
-      res.render('auth/login', {
-        errorMessage: `There isn't any account with email ${email}.`
-      });
-      return;
-    }
-
-    if (!bcrypt.compareSync(password, myUser.password)) {
-      res.render('auth/login', {
-        errorMessage: 'Invalid password.'
-      });
-      return;
-    }
-
-    req.session.currentUser = myUser;
-    res.redirect('/');
-  });
-});
 
 module.exports = router;
