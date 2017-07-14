@@ -36,13 +36,15 @@ app.use(session({
   cookie: { maxAge: 60000 },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60;
+    ttl: 24 * 60 * 60
   })
 }));
+
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/', authRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

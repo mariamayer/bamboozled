@@ -51,7 +51,7 @@ router.post('/signup', (req, res, next) => {
     myUser.save((err) => {
       if (err) {
         res.render('auth/signup', {
-          errorMessage: 'Something went wrong. Try again later.';
+          errorMessage: 'Something went wrong. Try again later.'
         });
         return;
       }
@@ -72,7 +72,7 @@ router.post('/login', (req, res, next) => {
 
   if (email === '' || password === '') {
     res.render('auth/login', {
-      errorMessage: 'Please provide your email and password to login'
+      errorMessage: 'Please provide your email and password to login.'
     });
     return;
   }
@@ -85,12 +85,12 @@ router.post('/login', (req, res, next) => {
       return;
     }
 
-    if (!bcrypt.compareSync(password, myUser.password) {
+    if (!bcrypt.compareSync(password, myUser.password)) {
       res.render('auth/login', {
         errorMessage: 'Invalid password.'
       });
       return;
-    })
+    }
 
     req.session.currentUser = myUser;
     res.redirect('/');
