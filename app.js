@@ -2,11 +2,15 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const authRoutes = require('./routes/auth');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/bamboozled');
@@ -25,8 +29,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'No clue? No problem.',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60;
+  })
+}));
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/', authRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
