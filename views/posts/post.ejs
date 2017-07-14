@@ -1,0 +1,10 @@
+<h1><%= post.name %></h1>
+<p><%= post.description %></p>
+
+<form action="/posts/<%= post.id %>" method="POST">
+
+  <label for="description">Answer</label>
+  <textarea name="description" rows="3" cols="80"></textarea>
+
+  <button type="submit">Submit Answer</button>
+</form>
