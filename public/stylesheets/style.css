@@ -1,6 +1,8 @@
 body {
   font: 14px "Source Sans Pro", sans-serif;
+  background: #d7d7d7;
 }
+
 .navbar-default{
   background: transparent;
   border: 0;
@@ -8,4 +10,24 @@ body {
 
 a {
   color: #00B7FF;
+}
+
+/* POSTS */
+.post{
+  background: #fff;
+  list-style: none;
+  margin-bottom:20px;
+  display: flex;
+  padding:0;
+}
+.post .gradient{
+  padding-top:5%;
+  background: #bfe7c4; /* Old browsers */
+  background: -moz-linear-gradient(top, #bfe7c4 0%, #a8f1ef 100%);
+  background: -webkit-linear-gradient(top, #bfe7c4 0%,#a8f1ef 100%);
+  background: linear-gradient(to bottom, #bfe7c4 0%,#a8f1ef 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfe7c4', endColorstr='#a8f1ef',GradientType=0 );
+}
+.post .body a{
+  color:#777777
 }

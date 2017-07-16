@@ -4,9 +4,18 @@
 <div class="col-md-8">
   <ul>
     <% posts.forEach((post) => { %>
-      <li>
-        <a href="<%= post.id %>"><h1><%= post.title %></h1></a>
-        <p><%= post.description %></p>
+      <li class="post col-md-12">
+        <div class="col-md-2 gradient text-center">
+          <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> 0</p>
+          <p><i class="fa fa-comment" aria-hidden="true"></i> 0</p>
+        </div>
+        <div class="col-md-8 body">
+          <a href="posts/<%= post.id %>"><h1><%= post.title %></h1></a>
+          <p><%= post.description %></p>
+        </div>
+        <div class="col-md-2 avatar">
+
+        </div>
       </li>
     <%  }) %>
   </ul>
