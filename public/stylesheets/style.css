@@ -1,6 +1,9 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Source Sans Pro", sans-serif;
+}
+.navbar-default{
+  background: transparent;
+  border: 0;
 }
 
 a {
