@@ -1,10 +1,28 @@
-<h1><%= post.name %></h1>
-<p><%= post.description %></p>
+<%- include ../partials/nav.ejs %>
+    <div class="container">
+      <h1><%= post.title %></h1>
+      <p><%= post.description %></p>
+      <% answer.forEach((answer) => { %>
+        <li class="post col-md-12">
+          <div class="col-md-2 gradient text-center">
+            <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> 0</p>
+          </div>
+          <div class="col-md-8 body">
+            <a href="posts/<%= post.id %>"><h1><%= answer.title %></h1></a>
+            <p><%= answer.description %></p>
+          </div>
+          <div class="col-md-2 avatar">
 
-<form action="/posts/<%= post.id %>" method="POST">
+          </div>
+        </li>
+      <%  }) %>
 
-  <label for="description">Answer</label>
-  <textarea name="description" rows="3" cols="80"></textarea>
+      <form action="/posts/<%= post.id %>" method="POST">
 
-  <button type="submit">Submit Answer</button>
-</form>
+        <label for="description">Answer</label>
+        <textarea name="description" rows="3" cols="80"></textarea>
+
+        <button type="submit">Submit Answer</button>
+      </form>
+    </div>
+<%- include ../partials/footer.ejs %>

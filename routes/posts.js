@@ -40,7 +40,8 @@ router.get('/:id', (req, res, next) => {
 
   Post.findById(postId, (err, post) => {
     if (err) { return next(err); }
-    res.render('posts/post', { post: post });
+    console.log(post.answers)
+    res.render('posts/post', { post: post,answer:post.answers});
   });
 });
 
