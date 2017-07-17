@@ -14,11 +14,17 @@
   </div>
 </form>
 
+<a href="/auth/facebook">Login With Facebook</a>
+<br>
+<a href="/auth/google">Login with Google</a>
+
+
 <br><br>
 <% if (typeof errorMessage !== "undefined") { %>
   <div class="error-message"><%= errorMessage %></div>
   <% } %>
   <br><br>
+
 
   <p class="account-message">
     Dont have an account? <a href="/signup">Sign up</a>

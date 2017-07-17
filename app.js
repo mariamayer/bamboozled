@@ -10,6 +10,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const FbStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const flash = require('connect-flash');
 const User = require('./models/user');
 const postsRoutes = require('./routes/posts');
@@ -34,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(flash());
+
 
 app.use(session({
   secret: 'No clue? No problem.',
@@ -74,6 +76,60 @@ passport.use(new LocalStrategy((username, password, next) => {
   });
 }));
 
+passport.use(new FbStrategy({
+  clientID: "1061388583996558",
+  clientSecret: "d79a2674b9cc0ae8da9884cca78133a5",
+  callbackURL: "/auth/facebook/callback"
+}, (accessToken, refreshToken, profile, done) => {
+  User.findOne({ facebookID: profile.id }, (err, user) => {
+    if (err) {
+      return done(err);
+    }
+    if (user) {
+      return done(null, user);
+    }
+
+    const newUser = new User({
+      facebookID: profile.id
+    });
+
+    newUser.save((err) => {
+      if (err) {
+        return done(err);
+      }
+      done(null, newUser);
+    });
+  });
+}));
+
+passport.use(new GoogleStrategy({
+  clientID: "235507016444-g6s276m5bf440mv9la9anrrbrjfbcocs.apps.googleusercontent.com",
+  clientSecret: "4RxkutbkVMr-8QehL2eCasRk",
+  callbackURL: "/auth/google/callback"
+}, (accessToken, refreshToken, profile, done) => {
+  User.findOne({ googleID: profile.id }, (err, user) => {
+    if (err) {
+      return done(err);
+    }
+    if (user) {
+      return done(null, user);
+    }
+
+    const newUser = new User({
+      googleID: profile.id
+    });
+
+    newUser.save((err) => {
+      if (err) {
+        return done(err);
+      }
+      done(null, newUser);
+    });
+  });
+
+}));
+
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
