@@ -2,7 +2,8 @@ const express  = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const ensureLogin = require("connect-ensure-login");
+const flash = require('connect-flash');
 const User = require('../models/user');
 
 const router = express.Router();
@@ -62,12 +63,12 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
-router.get('/login', (req, res, next) => {
-  if (req.session) {
-    req.session.carrito = 'dada'
-  }
-  res.render('auth/login')
-})
+
+router.get("/login", (req, res, next) => {
+  res.render("auth/login");
+});
+  
+
 
 router.post('/login', (req, res, next) => {
   var email = req.body.email;
@@ -97,26 +98,17 @@ router.post('/login', (req, res, next) => {
   });
 })
 
+router.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
 
-// router.get("/logout", (req, res) => {
-//   req.logout();
-//   res.redirect("/login");
-// });
 
-router.get('/logout', (req, res, next) => {
-  if (!req.session.currentUser) {
-    res.redirect('/');
-    return;
-  }
-
-  req.session.destroy((err) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    res.redirect('/');
-  });
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
 });
 
 router.get("/auth/facebook", passport.authenticate("facebook"));
@@ -136,15 +128,5 @@ router.get("/auth/google/callback", passport.authenticate("google", {
   failureRedirect: '/login',
 }));
 
-router.get('/login', (req, res, next) => {
-  res.render('auth/login');
-});
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true,
-  passReqToCallback: true
-}));
 
 module.exports = router;

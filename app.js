@@ -19,7 +19,8 @@ const categoriesRoutes = require('./routes/categories');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const authRoutes = require('./routes/auth');
-
+const profileRoutes = require('./routes/profile');
+const ensureLogin = require("connect-ensure-login");
 
 mongoose.connect('mongodb://localhost/bamboozled');
 
@@ -49,19 +50,21 @@ app.use(session({
   })
 }));
 
-passport.serializeUser((user, cb) => {
-  cb(null, user.id);
-});
 
-passport.deserializeUser((id, cb) => {
-  User.findOne({ "_id": id }, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
 
-passport.use(new LocalStrategy((username, password, next) => {
-  User.findOne({ username }, (err, user) => {
+app.use(flash());
+
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
+}, 
+  (req, username, password, next) => {
+  console.log('----------');
+  console.log(req.body);
+  console.log(username);
+  console.log('----------');
+  User.find({ username }, (err, user) => {
     if (err) {
       return next(err);
     }
@@ -75,6 +78,17 @@ passport.use(new LocalStrategy((username, password, next) => {
     return next(null, user);
   });
 }));
+
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findOne({ "_id": id }, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 
 passport.use(new FbStrategy({
   clientID: "1061388583996558",
@@ -129,10 +143,9 @@ passport.use(new GoogleStrategy({
 
 }));
 
-app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 app.use('/', index);
@@ -140,6 +153,7 @@ app.use('/users', users);
 app.use('/', authRoutes);
 app.use('/posts', postsRoutes);
 app.use('/categories', categoriesRoutes);
+app.use('/profile', profileRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
