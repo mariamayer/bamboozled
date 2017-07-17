@@ -54,28 +54,28 @@ app.use(session({
 
 app.use(flash());
 
-passport.use(new LocalStrategy({
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
 }, 
-  (req, username, password, next) => {
-  console.log('----------');
-  console.log(req.body);
-  console.log(username);
-  console.log('----------');
-  User.find({ username }, (err, user) => {
+  (req, email, password, next) => {
+  User.find({ email }, (err, users) => {
     if (err) {
       return next(err);
     }
-    if (!user) {
+    if (users.length === 0) {
       return next(null, false, { message: "Incorrect email" });
     }
-    if (!bcrypt.compareSync(password, user.password)) {
+    console.log(password, users[0].password)
+    if (!bcrypt.compareSync(password, users[0].password)) {
       return next(null, false, { message: "Incorrect password" });
     }
 
-    return next(null, user);
+    return next(null, users[0]);
   });
 }));
 
@@ -144,8 +144,6 @@ passport.use(new GoogleStrategy({
 }));
 
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 app.use('/', index);
