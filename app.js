@@ -61,7 +61,7 @@ passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
-}, 
+},
   (req, email, password, next) => {
   User.find({ email }, (err, users) => {
     if (err) {

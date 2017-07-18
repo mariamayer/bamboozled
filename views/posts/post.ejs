@@ -1,28 +1,33 @@
 <%- include ../partials/nav.ejs %>
     <div class="container">
       <h1><%= post.title %></h1>
+
       <p><%= post.description %></p>
+
+      <% if (userLogged) { %>
+        <a href="#" class="btn" id="subscribe" data-id="<%= post._id %>">Follow</a>
+      <% } %>
       <% answer.forEach((answer) => { %>
         <li class="post col-md-12">
           <div class="col-md-2 gradient text-center">
-            <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> 0</p>
+            <p><i id="buttonID" data-id="<%= answer._id %>" class="fa fa-thumbs-up" aria-hidden="true"></i> <span id="<%= answer._id %>" data-value="<%= answer.rating %>" ><%= answer.rating %></span></p>
           </div>
           <div class="col-md-8 body">
-            <a href="posts/<%= post.id %>"><h1><%= answer.title %></h1></a>
             <p><%= answer.description %></p>
           </div>
           <div class="col-md-2 avatar">
-
+            <p><%= answer._creator.email %></p>
           </div>
         </li>
       <%  }) %>
-
+      <% if (userLogged) { %>
       <form action="/posts/<%= post.id %>" method="POST">
 
         <label for="description">Answer</label>
         <textarea name="description" rows="3" cols="80"></textarea>
 
-        <button type="submit">Submit Answer</button>
+        <button class="btn btn-bamboozled" type="submit">Submit Answer</button>
       </form>
+      <% } %>
     </div>
 <%- include ../partials/footer.ejs %>

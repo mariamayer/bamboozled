@@ -1,25 +1,25 @@
-<div class="col-md-2">
-  sidebar
-</div>
-<div class="col-md-8">
+<div class="col-md-9">
   <ul>
     <% posts.forEach((post) => { %>
       <li class="post col-md-12">
         <div class="col-md-2 gradient text-center">
-          <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> 0</p>
-          <p><i class="fa fa-comment" aria-hidden="true"></i> 0</p>
+          <p><i class="fa fa-users" aria-hidden="true"></i> <%= post.subscribedUsers.length %></p>
+          <p><i class="fa fa-comment" aria-hidden="true"></i> <%= post.answers.length %></p>
         </div>
         <div class="col-md-8 body">
           <a href="posts/<%= post.id %>"><h1><%= post.title %></h1></a>
+          <p class="categories"><%= post.categories %></p>
           <p><%= post.description %></p>
         </div>
         <div class="col-md-2 avatar">
-
+          <%= post._creator.email %>
         </div>
       </li>
     <%  }) %>
   </ul>
 </div>
-<div class="col-md-2">
-  sidebar
+<div class="col-md-3">
+  <% categories.forEach((category) => { %>
+    <p><%= category.title %></p>
+  <%  }) %>
 </div>

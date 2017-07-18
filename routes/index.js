@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Post = require('../models/post');
+const Category = require('../models/category');
 
 function auth(req, res, next) {
   if (req.isAuthenticated()) {
@@ -10,11 +11,26 @@ function auth(req, res, next) {
   }
 }
 
-/* GET home page. */
+//Render home
 router.get('/', function(req, res, next) {
   Post.find({}, (err, posts) => {
+    Category.find({}, (err, categories) => {
+      if (err) { return next(err) };
+      res.render('index', {
+        posts: posts,categories:categories
+      });
+    });
+  });
+});
+
+//Search
+router.get('/search', (req, res, next) => {
+  console.log(req.query.q)
+  var regularExpression = new RegExp(req.query.q);
+  console.log(regularExpression)
+  Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, (err, posts) => {
     if (err) { return next(err) }
-    res.render('index', {
+    res.render('posts/search', {
       posts: posts
     });
   });

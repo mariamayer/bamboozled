@@ -8,9 +8,9 @@ const PostSchema = new Schema({
   description     : { type: String, required: true },
   categories      : [{ type: String, required: true }],
   subscribedUsers : [{ type: Schema.Types.ObjectId, ref: 'User'}],
-  _creator        : { type: Schema.Types.ObjectId, ref: 'User'},
-  raiting         : { type: Number, default: 0 },
-  answers         : [Answer.schema],
+  _creator        : Schema.Types.Mixed,
+  rating          : { type: Number, default: 0 },
+  answers         : [{ type: Schema.Types.ObjectId, ref: 'Answer'}],
   imgUrl          : { type: String, default: "" },
 },
 {
