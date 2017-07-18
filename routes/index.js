@@ -3,21 +3,15 @@ var router = express.Router();
 const Post = require('../models/post');
 const Category = require('../models/category');
 
-function auth(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-}
-
-//Render home
-router.get('/', function(req, res, next) {
+/* GET home page. */
+router.get('/', (req, res, next) => {
   Post.find({}, (err, posts) => {
     Category.find({}, (err, categories) => {
       if (err) { return next(err) };
+      console.log("categories",categories)
+       console.log("posts",posts)
       res.render('index', {
-        posts: posts,categories:categories
+        posts: posts[0],categories:categories
       });
     });
   });
@@ -34,12 +28,6 @@ router.get('/search', (req, res, next) => {
       posts: posts
     });
   });
-});
-
-
-router.get('/posts', auth, function (req, res, next) {
-
-  res.render('posts/index', { message: req.flash('success') });
 });
 
 module.exports = router;

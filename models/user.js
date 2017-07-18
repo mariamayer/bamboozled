@@ -11,7 +11,7 @@ const userSchema = new Schema({
     gender          : { type: String, default: '' },
     role            : { type: String, enum: ['ADMIN', 'GUEST'], default: 'GUEST' },
     bio             : { type: String, default: '' },
-    avatar          : { type: String, default: "" },
+    avatar          : { type: String, default: '../images/avatar.png'},
     facebookID      : { type: String },
     googleID        : { type: String }
 }, {
@@ -21,3 +21,4 @@ const userSchema = new Schema({
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+

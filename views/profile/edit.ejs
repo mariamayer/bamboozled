@@ -1,0 +1,39 @@
+<%- include ../partials/nav.ejs %>
+    <div class="container">
+        <img src="../<%= user.avatar %>" alt="avatar" height='100' width='100'>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar">
+            <input type="submit" value="Save">
+        </form>
+
+        <form action="/profile/<%= user._id %>" method="POST">
+
+            <p><label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= user.name %>"></p>
+
+            <p><label for="bio">Bio:</label>
+            <textarea type="text" name="bio" id="bio"><%= user.bio %></textarea></p>
+
+            <p><label for="email">Email:</label>
+            <input type="text" name="email" id="email" value="<%= user.email %>"></p>
+
+            <p><label for="gender">Gender:</label>
+            <select name="gender" id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            
+            <p><label for="age">Age:</label>
+            <input type="number" name="age" id="age" value="<%= user.age %>"></p>
+            
+            <button type="submit">Apply Changes</button>
+            <button onclick="window.location='/profile/<%= user._id %>">Back</button>
+        </form>
+
+    </div>
+<%- include ../partials/footer.ejs %>
+
+
+

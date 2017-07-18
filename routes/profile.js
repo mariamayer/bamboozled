@@ -1,26 +1,70 @@
 const express = require('express');
 const User = require('../models/user');
+const Avatar = require('../models/avatar');
+const multer = require('multer');
+const upload = multer({ dest: './public/uploads' });
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  User.find({}, (err, posts) => {
-    if (err) { return next(err) }
-    res.render('profile', {
-      user: user
+router.get('/profile/:id', (req, res, next) => {
+    const userId = req.params.id;
+
+    User.find({_id: userId}, (err, users) => {
+        if (err) { return next(err) }
+        
+        if (users.length === 0) {
+            res.render('auth/login', { errorMessage: 'Id not found. Try logging in.'}); 
+        }
+        res.render('profile/index', { user: users[0] });
     });
+  });
+
+
+router.get('/profile/:id/edit', (req, res, next) => {
+    const userId = req.params.id;
+
+        User.find({_id: userId}, (err, users) => {
+            if (err) { return next(err) }
+            
+            if (users.length === 0) {
+                res.render('auth/login', { errorMessage: 'Id not found. Try logging in.'}); 
+            }
+            
+            res.render('profile/edit', { user: users[0] });
+        });
+});
+router.post('/profile/:id', (req, res) => {
+    const userId = req.params.id;
+
+    const updates = {
+     email: req.body.email, 
+     name: req.body.name,
+     age: req.body.age,
+     gender: req.body.gender,
+     bio: req.body.bio 
+    };
+  
+  User.findByIdAndUpdate(userId, updates, (err, users) => {
+    if (err) { return next(err) }
+    res.redirect(`/profile/${userId}`);
   });
 });
 
 
-// router.get('/:id', (req, res, next) => {
-//     const userId = req.params.id;
-//     User.findById(userId, (err, users) => {
-//         if (err) { return next(err) }
-//         res.render('profile', {
-//             user: user
-//         });
-//     });
-// });
+router.post('/upload', upload.single('avatar'), (req, res) => {
+
+  avatar = new Avatar({
+    avatarPath: `/uploads/${req.file.filename}`,
+    avatarName: req.file.originalname
+  });
+
+  avatar.save((err) => {
+    res.redirect('/');
+  });
+});
+
+router.get('/profile/:id/edit', (req, res, next) => {
+    res.render('profile/edit')
+});
 
 module.exports = router;

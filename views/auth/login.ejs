@@ -1,36 +1,37 @@
 <%- include ../partials/nav.ejs %>
+  <div class="container">
 
-<div class="container">
-  <h2>Login</h2>
+    <h2>Login</h2>
 
-  <form action="/login" method="POST">
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" name="email" placeholder="Enter your email">
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" name="password" placeholder="Enter your password">
-    </div>
-    <div>
-      <input type="submit" value="Log In">
-    </div>
-  </form>
+    <form action="/login" method="POST">
+      <div>
+        <label for="email">Email:</label>
+        <input type="text" name="email" placeholder="Enter your email">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" placeholder="Enter your password">
+      </div>
+      <div>
+        <input type="submit" value="Log In" class="btn">
+      </div>
+    </form>
 
-  <a href="/auth/facebook">Login With Facebook</a>
-  <br>
-  <a href="/auth/google">Login with Google</a>
+    <a href="/auth/facebook">Login With Facebook</a>
+    <br>
+    <a href="/auth/google">Login with Google</a>
 
 
-  <br><br>
-  <% if (typeof errorMessage !== "undefined") { %>
-    <div class="error-message"><%= errorMessage %></div>
-    <% } %>
     <br><br>
+    <% if (typeof errorMessage !== "undefined") { %>
+      <div class="error-message"><%= errorMessage %></div>
+      <% } %>
+      <br><br>
 
 
-    <p class="account-message">
-      Dont have an account? <a href="/signup">Sign up</a>
-    </p>
-</div>
+      <p class="account-message">
+        Dont have an account? <a href="/signup">Sign up</a>
+      </p>
+
+  </div>
 <%- include ../partials/footer.ejs %>

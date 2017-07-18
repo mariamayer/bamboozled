@@ -21,6 +21,7 @@ const users = require('./routes/users');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const ensureLogin = require("connect-ensure-login");
+const multer = require('multer');
 
 mongoose.connect('mongodb://localhost/bamboozled');
 
@@ -50,10 +51,7 @@ app.use(session({
   })
 }));
 
-
-
 app.use(flash());
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -64,13 +62,12 @@ passport.use('local', new LocalStrategy({
 },
   (req, email, password, next) => {
   User.find({ email }, (err, users) => {
-    if (err) {
-      return next(err);
-    }
+    if (err) { return next(err); }
+
     if (users.length === 0) {
       return next(null, false, { message: "Incorrect email" });
     }
-    console.log(password, users[0].password)
+
     if (!bcrypt.compareSync(password, users[0].password)) {
       return next(null, false, { message: "Incorrect password" });
     }
@@ -144,14 +141,12 @@ passport.use(new GoogleStrategy({
 }));
 
 
-
-
 app.use('/', index);
 app.use('/users', users);
 app.use('/', authRoutes);
 app.use('/posts', postsRoutes);
 app.use('/categories', categoriesRoutes);
-app.use('/profile', profileRoutes);
+app.use('/', profileRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
