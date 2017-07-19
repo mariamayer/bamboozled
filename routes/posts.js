@@ -56,7 +56,13 @@ router.get('/:id', (req, res, next) => {
   .populate({path: 'answers'})
   .exec(function(err, post) {
     if (err){ return next(err); }
-    return res.render('posts/post', { post: post,answer:post.answers,categories:post.categories,userLogged:userLogged });
+    return res.render('posts/post', {
+      post: post,
+      answer:post.answers,
+      categories:post.categories,
+      userLogged:userLogged,
+      date:post.created_at,
+    });
   });
 });
 

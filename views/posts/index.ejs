@@ -20,6 +20,8 @@
 </div>
 <div class="col-md-3">
   <% categories.forEach((category) => { %>
-    <p><%= category.title %></p>
+    <div class="cat">
+      <a href="/categories/<%= category.title %>"><%= category.title %></a>
+    </div>
   <%  }) %>
 </div>
