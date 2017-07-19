@@ -9,7 +9,7 @@ const router = express.Router();
 const bcryptSalt = 10;
 
 router.get('/signup', (req, res, next) => {
-  res.render('auth/signup', {
+  res.render('auth/index', {
     errorMessage: ''
   });
 });
@@ -20,7 +20,7 @@ router.post('/signup', (req, res, next) => {
   const password = req.body.password;
 
   if (email === '' || password === '') {
-    res.render('auth/signup', {
+    res.render('auth/index', {
       errorMessage: 'Please provide your email and password to signup'
     });
     return;
@@ -63,7 +63,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.get("/login", (req, res, next) => {
-  res.render("auth/login");
+  res.render("auth/index");
 });
   
 router.post("/login", passport.authenticate("local", {

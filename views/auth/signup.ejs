@@ -1,7 +1,4 @@
-<%- include ../partials/nav.ejs %>
-  <div class="container">
-
-    <h2>Signup</h2>
+<h2>Signup</h2>
 
     <form action="/signup" method="POST" id="form-container">
       <label for="name">Name</label>
@@ -19,12 +16,6 @@
         <% } %>
         <br>
 
-        <button>Create account</button>
-
-        <p class="account-message">
-          Do you already have an account?
-          <a href="/login">Login</a>
-        </p>
+        <input type="submit" value="Create account" class="btn"/>
       </form>
-  </div>
-<%- include ../partials/footer.ejs %>
+

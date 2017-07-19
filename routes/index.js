@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
       console.log("categories",categories)
        console.log("posts",posts)
       res.render('index', {
-        posts: posts[0],categories:categories
+        posts: posts,categories:categories
       });
     });
   });

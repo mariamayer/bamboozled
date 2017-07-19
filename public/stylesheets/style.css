@@ -12,6 +12,12 @@ a {
   color: #00B7FF;
 }
 
+.goRight {
+  margin-left: 19%;
+  margin-top: 5%;
+}
+
+
 /* POSTS */
 .post{
   background: #fff;

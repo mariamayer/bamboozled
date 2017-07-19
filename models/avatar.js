@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const avatarSchema = new Schema({
-  avatarPath: { type: String },
-  avatarName: { type: String }
+  avatarPath: String,
+  avatarName: String
 },
 {
  timestamps: { createdAt: "created_at", updatedAt: "updated_at" }

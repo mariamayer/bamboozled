@@ -13,7 +13,7 @@ router.get('/profile/:id', (req, res, next) => {
         if (err) { return next(err) }
         
         if (users.length === 0) {
-            res.render('auth/login', { errorMessage: 'Id not found. Try logging in.'}); 
+            res.render('auth/index', { errorMessage: 'Id not found. Try logging in.'}); 
         }
         res.render('profile/index', { user: users[0] });
     });
@@ -27,7 +27,7 @@ router.get('/profile/:id/edit', (req, res, next) => {
             if (err) { return next(err) }
             
             if (users.length === 0) {
-                res.render('auth/login', { errorMessage: 'Id not found. Try logging in.'}); 
+                res.render('auth/index', { errorMessage: 'Id not found. Try logging in.'}); 
             }
             
             res.render('profile/edit', { user: users[0] });
@@ -52,16 +52,25 @@ router.post('/profile/:id', (req, res) => {
 
 
 router.post('/upload', upload.single('avatar'), (req, res) => {
-
-  avatar = new Avatar({
-    avatarPath: `/uploads/${req.file.filename}`,
-    avatarName: req.file.originalname
+    const userId = req.body.id;
+    avatar = new Avatar({
+        avatarPath: `/uploads/${req.file.filename}`,
+        avatarName: req.file.originalname
   });
 
-  avatar.save((err) => {
-    res.redirect('/');
+    const updates = {
+        avatar:  `/uploads/${req.file.filename}`, 
+    };
+
+    avatar.save((err) => {
+        User.findByIdAndUpdate(userId, updates, (err, user) => {
+            if (err) { return next(err) }
+            res.redirect(`/profile/${userId}/edit`);
+        });    
+
+    });
+
   });
-});
 
 router.get('/profile/:id/edit', (req, res, next) => {
     res.render('profile/edit')
