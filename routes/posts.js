@@ -58,7 +58,7 @@ router.get('/:id', (req, res, next) => {
     if (err){ return next(err); }
     return res.render('posts/post', {
       post: post,
-      answer:post.answers,
+      answers:post.answers,
       categories:post.categories,
       userLogged:userLogged,
       date:post.created_at,

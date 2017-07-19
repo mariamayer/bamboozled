@@ -8,8 +8,7 @@ router.get('/', (req, res, next) => {
   Post.find({}, (err, posts) => {
     Category.find({}, (err, categories) => {
       if (err) { return next(err) };
-      console.log("categories",categories)
-       console.log("posts",posts)
+
       res.render('index', {
         posts: posts,categories:categories
       });
@@ -22,9 +21,12 @@ router.get('/search', (req, res, next) => {
   var regularExpression = new RegExp(req.query.q);
 
   Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, (err, posts) => {
-    if (err) { return next(err) }
-    res.render('posts/search', {
-      posts: posts
+    Category.find({}, (err, categories) => {
+      if (err) { return next(err) };
+
+        res.render('posts/search', {
+          posts: posts,categories:categories
+        });
     });
   });
 });

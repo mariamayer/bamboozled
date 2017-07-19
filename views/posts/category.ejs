@@ -1,31 +1,9 @@
 <%- include ../partials/nav.ejs %>
-  <div class="container-fluid">
-    <div class="col-md-2">
-      sidebar
+  <div class="container">
+    <div class="col-md-12 header">
+      <h1><%= title %></h1>
     </div>
-    <div class="col-md-8">
-      <h2><%= title %></h2>
-      <ul>
-        <% posts.forEach((post) => { %>
-          <li class="post col-md-12">
-            <div class="col-md-2 gradient text-center">
-              <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> <%= post.rating %></p>
-              <p><i class="fa fa-comment" aria-hidden="true"></i> <%= post.answers.length %></p>
-            </div>
-            <div class="col-md-8 body">
-              <a href="posts/<%= post.id %>"><h1><%= post.title %></h1></a>
-              <p class="categories"><%= post.categories %></p>
-              <p><%= post.description %></p>
-            </div>
-            <div class="col-md-2 avatar">
-              <%= post._creator.email %>
-            </div>
-          </li>
-        <%  }) %>
-      </ul>
-    </div>
-    <div class="col-md-2">
-      sidebar
-    </div>
+    <%- include ../partials/posts.ejs %>
+    <%- include ../partials/sidebar.ejs %>
   </div>
 <%- include ../partials/footer.ejs %>

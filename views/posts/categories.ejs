@@ -1,13 +1,18 @@
 <%- include ../partials/nav.ejs %>
   <div class="container">
-    <ul>
-      <% categories.forEach((category) => { %>
-        <li>
-          <h1><%= category.title %></h1>
-          <p><%= category.description %></p>
-        </li>
-      <%  }) %>
-    </ul>
+    <div class="col-md-12 header">
+      <h1>Topics</h1>
+    </div>
+    <div class="col-md-12">
+      <ul>
+        <% categories.forEach((category) => { %>
+          <li>
+            <h1><%= category.title %></h1>
+            <p><%= category.description %></p>
+          </li>
+        <%  }) %>
+      </ul>
+    </div>
     <h2>Add new</h2>
     <form action="/categories/" method="POST">
 

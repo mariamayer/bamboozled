@@ -1,0 +1,8 @@
+<div class="col-md-3 sidebar">
+  <% categories.forEach((category) => { %>
+    <div class="cat">
+      <a href="/categories/<%= category.title %>"><%= category.title %></a>
+      <p><%= category.description %></p>
+    </div>
+  <%  }) %>
+</div>

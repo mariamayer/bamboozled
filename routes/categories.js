@@ -14,14 +14,17 @@ router.get('/', (req, res, next) => {
   });
 });
 
-//Display categories
+//Display posts by category
 router.get('/:title', (req, res, next) => {
 
   Post.find( {"categories" : {$in: [req.params.title] }}, (err, posts) => {
-    if (err) { return next(err) }
-    res.render('posts/category', {
-      posts: posts,
-      title:req.params.title,
+    Category.find({}, (err, categories) => {
+      if (err) { return next(err) }
+      res.render('posts/category', {
+        posts: posts,
+        title:req.params.title,
+        categories:categories
+      });
     });
   });
 

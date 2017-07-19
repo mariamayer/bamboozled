@@ -1,6 +1,7 @@
 body {
   font: 14px "Source Sans Pro", sans-serif;
-  background: #d7d7d7;
+  background: #e4e4e4;
+  color:#777777;
 }
 
 .navbar-default{
@@ -9,7 +10,35 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #9bd8d4;
+}
+
+.btn{
+  border:2px solid #fff;
+  background: transparent;
+  border-radius: 0
+}
+.navbar-form .form-control{
+  width:450px;
+  margin-right:20px;
+  border:0;
+  border-bottom:2px solid #000;
+}
+.form-control{
+  border:2px solid #000;
+  background: transparent;
+  border-radius: 0;
+  box-shadow:none;
+}
+
+/* HOME */
+.header{
+  padding-bottom:20px;
+}
+
+.header h1{
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .goRight {
@@ -19,6 +48,11 @@ a {
 
 
 /* POSTS */
+.posts{
+  margin:0;
+  padding:0
+}
+
 .post{
   background: #fff;
   list-style: none;
@@ -27,6 +61,7 @@ a {
   padding:0;
 }
 .post .gradient{
+  color:#000;
   padding-top:5%;
   background: #bfe7c4; /* Old browsers */
   background: -moz-linear-gradient(top, #bfe7c4 0%, #a8f1ef 100%);
@@ -34,6 +69,37 @@ a {
   background: linear-gradient(to bottom, #bfe7c4 0%,#a8f1ef 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfe7c4', endColorstr='#a8f1ef',GradientType=0 );
 }
-.post .body a{
-  color:#777777
+.post .body a,.navbar-default .navbar-nav>li>a{
+  color:#000;
+}
+
+.categories{
+  color:#000;
+}
+
+.avatar img{
+  width: 100%;
+}
+
+.sidebar{
+  background: #fff;
+}
+
+.cat{
+  padding:20px 0;
+  border-bottom:1px solid #ddd;
+}
+
+.cat:last-child{
+  border-bottom:0;
+}
+
+.cat a{
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+/* Ask */
+.new-form .btn{
+  width:100%;
 }
