@@ -23,10 +23,13 @@ router.get('/', (req, res, next) => {
 
 //Show upload post form
 router.get('/new',ensureLoggedIn('/login'), (req, res, next) => {
+  let userLogged = true;
+  let user = req.user;
   Category.find({}, (err, categories) => {
     if (err) { return next(err) }
     res.render('posts/new', {
-      categories: categories
+      categories: categories, 
+      userLogged, user
     });
   });
 });
@@ -48,10 +51,12 @@ router.post('/',ensureLoggedIn('/login'), (req, res, next) => {
 
 //Show post view
 router.get('/:id', (req, res, next) => {
-  let userLogged=false;
-  if(req.user){
-    userLogged=true;
+  let userLogged = false;
+  if (req.user) {
+    userLogged = true;
   }
+  let user = req.user;
+
   Post.findById(req.params.id)
   .populate({path: 'answers'})
   .exec(function(err, post) {
@@ -60,8 +65,9 @@ router.get('/:id', (req, res, next) => {
       post: post,
       answers:post.answers,
       categories:post.categories,
-      userLogged:userLogged,
-      date:post.created_at,
+      userLogged, 
+      user,
+      date:post.created_at
     });
   });
 });

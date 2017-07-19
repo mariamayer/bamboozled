@@ -7,6 +7,8 @@ const upload = multer({ dest: './public/uploads' });
 const router = express.Router();
 
 router.get('/profile/:id', (req, res, next) => {
+      var userLogged = false;
+      req.user ? userLogged = true : "";
     const userId = req.params.id;
 
     User.find({_id: userId}, (err, users) => {
@@ -15,12 +17,14 @@ router.get('/profile/:id', (req, res, next) => {
         if (users.length === 0) {
             res.render('auth/index', { errorMessage: 'Id not found. Try logging in.'}); 
         }
-        res.render('profile/index', { user: users[0] });
+        res.render('profile/index', { user: users[0],userLogged });
     });
   });
 
 
 router.get('/profile/:id/edit', (req, res, next) => {
+    let userLogged = false;
+    req.user ? userLogged = true : "";
     const userId = req.params.id;
 
         User.find({_id: userId}, (err, users) => {
@@ -30,7 +34,7 @@ router.get('/profile/:id/edit', (req, res, next) => {
                 res.render('auth/index', { errorMessage: 'Id not found. Try logging in.'}); 
             }
             
-            res.render('profile/edit', { user: users[0] });
+            res.render('profile/edit', { user: users[0], userLogged });
         });
 });
 router.post('/profile/:id', (req, res) => {
@@ -59,7 +63,7 @@ router.post('/upload', upload.single('avatar'), (req, res) => {
   });
 
     const updates = {
-        avatar:  `/uploads/${req.file.filename}`, 
+        avatar:  `../uploads/${req.file.filename}`, 
     };
 
     avatar.save((err) => {
@@ -73,7 +77,13 @@ router.post('/upload', upload.single('avatar'), (req, res) => {
   });
 
 router.get('/profile/:id/edit', (req, res, next) => {
-    res.render('profile/edit')
+    var userLogged = false;
+    req.user ? userLogged = true : "";
+    if (userLogged) {
+        res.render('profile/edit', userLogged, {user: req.user})
+    } else {
+        res.redirect('/');
+    }
 });
 
 module.exports = router;

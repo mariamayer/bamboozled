@@ -1,6 +1,6 @@
 <%- include ../partials/nav.ejs %>
     <div class="container">
-        <img src="../<%= user.avatar %>" alt="avatar" height='100' width='100'>
+        <img src="../<%= user.avatar %>" alt="avatar" height='100' width='100' class="img-circle">
 
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="avatar">

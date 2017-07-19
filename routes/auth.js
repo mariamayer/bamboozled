@@ -9,9 +9,10 @@ const router = express.Router();
 const bcryptSalt = 10;
 
 router.get('/signup', (req, res, next) => {
+  var userLogged = false;
   res.render('auth/index', {
     errorMessage: ''
-  });
+  }, userLogged);
 });
 
 router.post('/signup', (req, res, next) => {
@@ -63,7 +64,8 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.get("/login", (req, res, next) => {
-  res.render("auth/index");
+  var userLogged = false;
+  res.render("auth/index",{userLogged});
 });
   
 router.post("/login", passport.authenticate("local", {
