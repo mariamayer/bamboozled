@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/profile/:id', (req, res, next) => {
       var userLogged = false;
       req.user ? userLogged = true : "";
-    const userId = req.params.id;
+      const userId = req.params.id;
 
     User.find({_id: userId}, (err, users) => {
         if (err) { return next(err) }
@@ -17,7 +17,8 @@ router.get('/profile/:id', (req, res, next) => {
         if (users.length === 0) {
             res.render('auth/index', { errorMessage: 'Id not found. Try logging in.'}); 
         }
-        res.render('profile/index', { user: users[0],userLogged });
+
+        res.render('profile/index', { user: users[0], userLogged });
     });
   });
 
@@ -66,6 +67,7 @@ router.post('/upload', upload.single('avatar'), (req, res) => {
         avatar:  `../uploads/${req.file.filename}`, 
     };
 
+    
     avatar.save((err) => {
         User.findByIdAndUpdate(userId, updates, (err, user) => {
             if (err) { return next(err) }
@@ -73,7 +75,6 @@ router.post('/upload', upload.single('avatar'), (req, res) => {
         });    
 
     });
-
   });
 
 router.get('/profile/:id/edit', (req, res, next) => {

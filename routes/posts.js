@@ -3,6 +3,7 @@ const Post = require('../models/post');
 const Category = require('../models/category');
 const Answer = require('../models/answer');
 const { ensureLoggedIn }  = require('connect-ensure-login');
+const nodemailer = require('nodemailer');
 
 const router  = express.Router();
 
@@ -107,6 +108,36 @@ router.post('/:id', (req, res, next) => {
         res.redirect('/posts/'+postId);
       });
     });
+
+    //Send notification to subscribed Users
+    let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'ckchristiana@gmail.com', 
+        pass: 'chr1sper1'
+      }
+    });
+
+    const text = post.tile + '\n' + post.description + '\n' + newAnswer.description;
+
+    var mailOptions = {
+        from: '<ckchristiana@gmail.com>',
+        to: '<ckoudigkeli@gmail.com>',   //--------------------------------- needs to be updated
+        subject: 'New notification from Bamboozled...!', 
+        text: text
+    };
+
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log('----------------------------------', error,'----------------------------------');
+            res.json({yo: 'error'});
+        }else{
+            console.log('----------------------------------', 'Message sent: ' , info.response);
+            res.json({yo: info.response});
+        };
+    });
+
   });
 });
 

@@ -22,6 +22,7 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const ensureLogin = require("connect-ensure-login");
 const multer = require('multer');
+const nodemailer = require('nodemailer');
 
 mongoose.connect('mongodb://localhost/bamboozled');
 
