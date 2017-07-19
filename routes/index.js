@@ -19,9 +19,8 @@ router.get('/', (req, res, next) => {
 
 //Search
 router.get('/search', (req, res, next) => {
-  console.log(req.query.q)
   var regularExpression = new RegExp(req.query.q);
-  console.log(regularExpression)
+
   Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, (err, posts) => {
     if (err) { return next(err) }
     res.render('posts/search', {
