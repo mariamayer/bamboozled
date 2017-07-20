@@ -123,6 +123,16 @@ router.post('/:id', (req, res, next) => {
     });
 
     //Send notification to subscribed Users
+
+    let receiversIds = post.subscribedUsers;
+    let receivers = [];
+
+    receiversIds.forEach(receiversId => {
+      User.findById(receiversId, (err, user) => {
+        receivers.push(user.email);
+      });
+    });
+
     let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -131,11 +141,11 @@ router.post('/:id', (req, res, next) => {
       }
     });
 
-    const text = post.tile + '\n' + post.description + '\n' + newAnswer.description;
+    const text = post.title + '\n' + post.description + '\n' + newAnswer.description;
 
     var mailOptions = {
         from: '<ckchristiana@gmail.com>',
-        to: '<ckoudigkeli@gmail.com>',   //--------------------------------- needs to be updated
+        to: receivers,
         subject: 'New notification from Bamboozled...!', 
         text: text
     };
