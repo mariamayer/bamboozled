@@ -22,8 +22,9 @@ const profileRoutes = require('./routes/profile');
 const ensureLogin = require("connect-ensure-login");
 const multer = require('multer');
 const nodemailer = require('nodemailer');
+require("dotenv").config();
 
-mongoose.connect('mongodb://heroku_jkfhh9sz:o4fhjnaa5j574f8p3keept3r3o@ds113713.mlab.com:13713/heroku_jkfhh9sz');
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
