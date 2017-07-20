@@ -23,7 +23,7 @@ const ensureLogin = require("connect-ensure-login");
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 
-mongoose.connect('mongodb://localhost/bamboozled');
+mongoose.connect('mongodb://heroku_jkfhh9sz:o4fhjnaa5j574f8p3keept3r3o@ds113713.mlab.com:13713/heroku_jkfhh9sz');
 
 const app = express();
 
