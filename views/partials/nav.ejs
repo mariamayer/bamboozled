@@ -33,7 +33,7 @@
               <li><a href="../posts/new"><i class="fa fa-comment" aria-hidden="true"></i> Ask</a></li>
               <li><a href="../categories"><i class="fa fa-tags" aria-hidden="true"></i> Topics</a></li>
               <% if (userLogged) { %>
-                <li><a class="profile" href="../profile/<%=user._id%>"> <img src="../<%=user.avatar%>" alt="profPic" height="30" width="30" class="img-circle"> </i><%=user.name%></a></li>
+                <li><a class="profile-link" href="../profile/<%=user._id%>"> <img src="../<%=user.avatar%>" alt="profPic" height="30" width="30" class="img-circle"> </i><%=user.name%></a></li>
                 <li><a href="../logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
               <% } else { %>
               <li><a href="../login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>

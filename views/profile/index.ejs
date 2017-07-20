@@ -1,22 +1,35 @@
 <%- include ../partials/nav.ejs %>
     <div class="container">
-      <div class="col-md-6 col-md-offset-3 header">
-        <h1><%= user.name %></h1>
-      </div>
-      <div class="col-md-6 col-md-offset-3">
-        <img src="<%= user.avatar %>" alt="avatar" height='100' width='100' class="img-circle">
-          <p><span>Name: </span><%= user.name %></p>
+      <div class="col-md-6 col-md-offset-3 profile">
+        <div class="col-md-12">
+          <div class="col-md-6 text-center">
+            <img src="<%= user.avatar %>" alt="avatar" height='100' width='100' class="img-circle">
+          </div>
+          <div class="col-md-6">
+            <h1><%= user.name %></h1>
+            <p><span>Member Since: <% var date=new Date(user.created_at); %>
+            <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %></span></p>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="col-md-6 text-center">
+            <p class="count"><%= user.answersPosted %></p><span>Answers Posted </span>
+          </div>
+          <div class="col-md-6 text-center">
+            <p class="count"><%= user.questionsPosted %></p><span>Questions Posted </span>
+          </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2 profile-body">
           <p><span>Bio: </span> <%= user.bio %></p>
           <p><span>Email: </span> <%= user.email %></p>
           <p><span>Gender: </span> <%= user.gender %></p>
           <p><span>Age: </span> <%= user.age %></p>
-          <p><span>Answers Posted: </span> <%= user.answersPosted %></p>
-          <p><span>Questions Posted: </span> <%= user.questionsPosted %></p>
-          <p><span>Member Since: <% var date=new Date(user.created_at); %>
-          <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %></span></p>
+        </div>
 
 
-        <button class='btn' onclick="window.location='/profile/<%= user._id %>/edit'">Update Info</button>
+          <% if(isOwner){ %>
+            <button class='btn' onclick="window.location='/profile/<%= user._id %>/edit'">Update Info</button>
+          <% } %>
       </div>
     </div>
 <%- include ../partials/footer.ejs %>
