@@ -3,6 +3,10 @@
       <div class="col-md-10 col-md-offset-1 header">
         <h1><%= post.title %></h1>
         <div class="col-md-10">
+          <p><i class="fa fa-calendar" aria-hidden="true"></i>
+            <% var date=new Date(post.created_at); %>
+            <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %>
+          </p>
           <p class="categories"><%= post.categories %></p>
           <p><%= post.description %></p>
         </div>
@@ -28,6 +32,10 @@
                   <p class="best">Best Answer <i class="fa fa-trophy" aria-hidden="true"></i></p>
                 <% } %>
                 <p class="answer"><%= answer.description %></p>
+                <p><i class="fa fa-calendar" aria-hidden="true"></i>
+                  <% var date=new Date(answer.created_at); %>
+                  <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %>
+                </p>
               </div>
               <div class="col-md-2 avatar text-center">
                 <img src="<%= answer._creator.avatar %>">

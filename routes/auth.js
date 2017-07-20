@@ -51,14 +51,14 @@ router.post('/signup', (req, res, next) => {
 
     const myUser = new User (userSubmission);
 
-    myUser.save((err) => {
+    myUser.save((err,user) => {
       if (err) {
         res.render('auth/signup', {
           errorMessage: 'Something went wrong. Try again later.'
         });
         return;
       }
-      res.redirect('/');
+      res.redirect('/profile/'+user._id);
     });
   });
 });

@@ -12,6 +12,8 @@
           <p><span>Age: </span> <%= user.age %></p>
           <p><span>Answers Posted: </span> <%= user.answersPosted %></p>
           <p><span>Questions Posted: </span> <%= user.questionsPosted %></p>
+          <p><span>Member Since: <% var date=new Date(user.created_at); %>
+          <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %></span></p>
 
 
         <button class='btn' onclick="window.location='/profile/<%= user._id %>/edit'">Update Info</button>

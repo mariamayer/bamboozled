@@ -6,11 +6,17 @@
       <% posts.forEach((post) => { %>
         <li class="post col-md-12">
           <div class="col-md-2 gradient text-center">
-            <p><i class="fa fa-users" aria-hidden="true"></i> <%= post.subscribedUsers.length %></p>
-            <p><i class="fa fa-comment" aria-hidden="true"></i> <%= post.answers.length %></p>
+            <div class="center">
+              <p><i class="fa fa-users" aria-hidden="true"></i> <%= post.subscribedUsers.length %></p>
+              <p><i class="fa fa-comment" aria-hidden="true"></i> <%= post.answers.length %></p>
+            </div>
           </div>
           <div class="col-md-8 body">
             <a href="posts/<%= post.id %>"><h1><%= post.title %></h1></a>
+            <p><i class="fa fa-calendar" aria-hidden="true"></i>
+              <% var date=new Date(post.created_at); %>
+              <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %>
+            </p>
             <p class="categories"><%= post.categories %></p>
             <p><%= post.description %></p>
           </div>

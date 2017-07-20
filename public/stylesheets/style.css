@@ -36,6 +36,10 @@ a {
   box-shadow:none;
 }
 
+.profile{
+  margin-top:-3px;
+}
+
 .answer{
   padding-top:20px;
   padding-bottom:15px;
@@ -53,11 +57,23 @@ a {
 /* HOME */
 .header{
   padding-bottom:20px;
+  padding-top:60px;
 }
 
 .header h1{
   letter-spacing: 2px;
   text-transform: uppercase;
+}
+
+.home{
+  padding:0;
+}
+
+.home .header{
+  padding-top:150px;
+  height:380px;
+  background: url('../images/header_img.png');
+  background-size: cover;
 }
 
 .form{
@@ -80,7 +96,7 @@ a {
 }
 .post .gradient{
   color:#000;
-  padding-top:5%;
+  padding-top:35px;
   background: #bfe7c4; /* Old browsers */
   background: -moz-linear-gradient(top, #bfe7c4 0%, #a8f1ef 100%);
   background: -webkit-linear-gradient(top, #bfe7c4 0%,#a8f1ef 100%);
@@ -125,6 +141,10 @@ a {
 /* Forms */
 #form-container{
   display: none;
+}
+
+.navbar-form .btn{
+  background: #eeedeb;
 }
 
 /* Ask */

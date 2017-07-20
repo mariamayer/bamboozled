@@ -136,7 +136,7 @@ router.post('/:id', (req, res, next) => {
     let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: 'ckchristiana@gmail.com', 
+        user: 'ckchristiana@gmail.com',
         pass: 'chr1sper1'
       }
     });
@@ -146,7 +146,7 @@ router.post('/:id', (req, res, next) => {
     var mailOptions = {
         from: '<ckchristiana@gmail.com>',
         to: receivers,
-        subject: 'New notification from Bamboozled...!', 
+        subject: 'New notification from Bamboozled...!',
         text: text
     };
 
