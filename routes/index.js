@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
     Category.find({}, (err, categories) => {
       if (err) { return next(err) };
       res.render('index', {
-        posts: posts,categories:categories, userLogged,user
+        posts: posts,categories:categories,userLogged,user
       });
     });
   });
@@ -26,9 +26,11 @@ router.get('/search', (req, res, next) => {
   var user = req.user;
 
   Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, (err, posts) => {
-    if (err) { return next(err) }
-    res.render('posts/search', {
-      posts: posts, userLogged, user
+    Category.find({}, (err, categories) => {
+      if (err) { return next(err) }
+      res.render('posts/search', {
+        posts: posts, categories:categories , userLogged, user
+      });
     });
   });
 });

@@ -1,15 +1,15 @@
 <h2>Login</h2>
 
 <form action="/login" method="POST">
-  <div>
+  <div class="form-group">
     <label for="email">Email:</label>
-    <input type="text" name="email" placeholder="Enter your email">
+    <input class="form-control" type="text" name="email" placeholder="Enter your email">
   </div>
-  <div>
+  <div class="form-group">
     <label for="password">Password:</label>
-    <input type="password" name="password" placeholder="Enter your password">
+    <input class="form-control" type="password" name="password" placeholder="Enter your password">
   </div>
-  <div>
+  <div class="form-group">
     <input type="submit" value="Log In" class="btn">
   </div>
 </form>
@@ -24,5 +24,3 @@
   <div class="error-message"><%= message %></div>
   <% } %>
   <br><br>
-
-

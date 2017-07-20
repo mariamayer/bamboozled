@@ -2,6 +2,7 @@ const express = require('express');
 const Post = require('../models/post');
 const Category = require('../models/category');
 const Answer = require('../models/answer');
+const User = require('../models/user');
 const { ensureLoggedIn }  = require('connect-ensure-login');
 const nodemailer = require('nodemailer');
 
@@ -26,23 +27,30 @@ router.get('/', (req, res, next) => {
 router.get('/new',ensureLoggedIn('/login'), (req, res, next) => {
   let userLogged = true;
   let user = req.user;
+
   Category.find({}, (err, categories) => {
     if (err) { return next(err) }
     res.render('posts/new', {
-      categories: categories, 
+      categories: categories,
       userLogged, user
     });
   });
+
 });
 
 //Post a post
 router.post('/',ensureLoggedIn('/login'), (req, res, next) => {
+  let userId = req.user.id;
+
   const newPost = new Post({
     title: req.body.title,
     description: req.body.description,
     categories: req.body.categories,
     _creator: req.user
   });
+  User.findByIdAndUpdate(userId, { $inc: { questionsPosted: 1 }}, function(err, data){
+      if (err){ return next(err); }
+   });
 
   newPost.save( (err) => {
     console.log(err)
@@ -59,14 +67,14 @@ router.get('/:id', (req, res, next) => {
   let user = req.user;
 
   Post.findById(req.params.id)
-  .populate({path: 'answers'})
+  .populate({path: 'answers', options: { sort: { 'rating': -1 } }})
   .exec(function(err, post) {
     if (err){ return next(err); }
     return res.render('posts/post', {
       post: post,
       answers:post.answers,
       categories:post.categories,
-      userLogged, 
+      userLogged,
       user,
       date:post.created_at
     });
@@ -95,12 +103,17 @@ router.post('/subscribe', function (req, res) {
 //Answer post
 router.post('/:id', (req, res, next) => {
   let postId = req.params.id;
+  let userId = req.user.id;
 
   Post.findById(postId, (err, post) => {
     const newAnswer = new Answer({
       description: req.body.description,
       _creator: req.user,
     });
+
+    User.findByIdAndUpdate(userId, { $inc: { answersPosted: 1 }}, function(err, data){
+        if (err){ return next(err); }
+     });
 
     newAnswer.save( (err,answer) => {
       post.answers.push(answer._id);

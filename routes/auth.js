@@ -67,7 +67,7 @@ router.get("/login", (req, res, next) => {
   var userLogged = false;
   res.render("auth/index",{userLogged});
 });
-  
+
 router.post("/login", passport.authenticate("local", {
   successRedirect: "/",
   failureRedirect: "/login",

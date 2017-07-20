@@ -1,28 +1,37 @@
 <%- include ../partials/nav.ejs %>
   <div class="container">
-    <div class="col-md-12 header">
+    <div class="col-md-6 col-md-offset-3 header">
       <h1>Topics</h1>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6 col-md-offset-3 sidebar">
       <ul>
         <% categories.forEach((category) => { %>
-          <li>
-            <h1><%= category.title %></h1>
+          <li class="cat">
+            <h1 class="title"><%= category.title %></h1>
             <p><%= category.description %></p>
           </li>
         <%  }) %>
       </ul>
     </div>
-    <h2>Add new</h2>
-    <form action="/categories/" method="POST">
+    <div class="col-md-6 col-md-offset-3">
+      <% if (userLogged) { %>
+        <h2>Add new</h2>
+        <form action="/categories/" method="POST">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="form-control">
+          </div>
 
-      <label for="title">Title</label>
-      <input type="text" name="title" class="form-control">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" rows="3" cols="80"></textarea>
+          </div>
 
-      <label for="description">Description</label>
-      <textarea name="description" rows="3" cols="80"></textarea>
-
-      <button type="submit">Submit Answer</button>
-    </form>
+          <button class="btn" type="submit">Submit Answer</button>
+        </form>
+      <% }else{ %>
+        <h3>Please <a href="../login">Log In</a> to add a new topic</h3>
+      <% } %>
+    </div>
   </div>
 <%- include ../partials/footer.ejs %>

@@ -1,27 +1,33 @@
 <%- include ../partials/nav.ejs %>
     <div class="container">
-      <div class="col-md-12 header">
+      <div class="col-md-10 col-md-offset-1 header">
         <h1><%= post.title %></h1>
         <div class="col-md-10">
           <p class="categories"><%= post.categories %></p>
           <p><%= post.description %></p>
         </div>
-        <div class="col-md-">
+        <div class="col-md-2">
           <% if (userLogged) { %>
             <a href="#" class="btn" id="subscribe" data-id="<%= post._id %>">Follow</a>
             <a href="#answer" class="btn" data-id="<%= post._id %>">Answer</a>
+          <% }else{ %>
+            <a href="../login" class="btn">Follow</a>
+            <a href="../login" class="btn">Answer</a>
           <% } %>
         </div>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-10 col-md-offset-1">
         <ul class="posts">
-          <% answers.forEach((answer) => { %>
+          <% answers.forEach((answer,index) => { %>
             <li class="post col-md-12">
               <div class="col-md-2 gradient text-center">
-                <p><i id="buttonID" data-id="<%= answer._id %>" class="fa fa-thumbs-up" aria-hidden="true"></i> <span id="<%= answer._id %>" data-value="<%= answer.rating %>" ><%= answer.rating %></span></p>
+                <p class="btn rateButton" data-id="<%= answer._id %>"><i class="fa fa-thumbs-up" aria-hidden="true"></i> <span id="<%= answer._id %>" data-value="<%= answer.rating %>" ><%= answer.rating %></span></p>
               </div>
               <div class="col-md-8 body">
-                <p><%= answer.description %></p>
+                <% if(index==0) { %>
+                  <p class="best">Best Answer <i class="fa fa-trophy" aria-hidden="true"></i></p>
+                <% } %>
+                <p class="answer"><%= answer.description %></p>
               </div>
               <div class="col-md-2 avatar text-center">
                 <img src="<%= answer._creator.avatar %>">

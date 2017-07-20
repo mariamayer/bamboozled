@@ -6,7 +6,11 @@ const router  = express.Router();
 
 //Display categories
 router.get('/', (req, res, next) => {
-  
+  let userLogged = false;
+  if (req.user) {
+    userLogged = true;
+  }
+
   Category.find({}, (err, categories) => {
     var userLogged = false;
       req.user ? userLogged = true : "";
@@ -15,7 +19,7 @@ router.get('/', (req, res, next) => {
     if (err) { return next(err) }
     res.render('posts/categories', {
       categories: categories,
-      userLogged, 
+      userLogged,
       user
     });
   });
@@ -23,7 +27,10 @@ router.get('/', (req, res, next) => {
 
 //Display posts by category
 router.get('/:title', (req, res, next) => {
-  
+  let userLogged = false;
+  if (req.user) {
+    userLogged = true;
+  }
 
   Post.find( {"categories" : {$in: [req.params.title] }}, (err, posts) => {
     Category.find({}, (err, categories) => {
@@ -35,8 +42,8 @@ router.get('/:title', (req, res, next) => {
       res.render('posts/category', {
         posts: posts,
         title:req.params.title,
-        categories:categories, 
-        userLogged, 
+        categories:categories,
+        userLogged,
         user
       });
     });

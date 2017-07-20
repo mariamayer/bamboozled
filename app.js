@@ -17,7 +17,6 @@ const User = require('./models/user');
 const postsRoutes = require('./routes/posts');
 const categoriesRoutes = require('./routes/categories');
 const index = require('./routes/index');
-const users = require('./routes/users');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const ensureLogin = require("connect-ensure-login");
@@ -143,7 +142,6 @@ passport.use(new GoogleStrategy({
 
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/', authRoutes);
 app.use('/posts', postsRoutes);
 app.use('/categories', categoriesRoutes);

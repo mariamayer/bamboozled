@@ -1,17 +1,20 @@
 $(document).ready(()=> {
-  $('#buttonID').click(function() {
+
+  $('.rateButton').click(function() {
+    var id=$(this).data('id');
     $.ajax({
-      data: { "id": $('#buttonID').data('id')},
+      data: { "id": id},
       type: 'POST',
       url: "./rate",
       success: function () {
-        $('#'+$('#buttonID').data('id')).html(function(i, val) { return +val+1; });
+        $('#'+id).html(function(i, val) { return +val+1; });
       },
       error: function (errorThrown) {
         console.log('error', errorThrown);
       }
     });
   });
+
   $('#subscribe').click(function() {
     $.ajax({
       data: { "id": $('#subscribe').data('id')},
@@ -25,4 +28,10 @@ $(document).ready(()=> {
       }
     });
   });
+
+  $('#signUp').click(function() {
+    $(this).hide();
+    $('#form-container').fadeIn(300);
+  });
+
 });
