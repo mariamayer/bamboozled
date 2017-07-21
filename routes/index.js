@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
   var userLogged = false;
   req.user ? userLogged = true : "";
   var user = req.user;
-  Post.find({}, (err, posts) => {
+  Post.find({} ,null, {sort: { created_at: -1 }}, (err, posts) => {
     Category.find({}, (err, categories) => {
       if (err) { return next(err) };
       res.render('index', {
@@ -25,7 +25,7 @@ router.get('/search', (req, res, next) => {
   req.user ? userLogged = true : "";
   var user = req.user;
 
-  Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, (err, posts) => {
+  Post.find( {"title" : { $regex: regularExpression, $options: 'i' }}, null, {sort: { created_at: -1 }}, (err, posts) => {
     Category.find({}, (err, categories) => {
       if (err) { return next(err) }
       res.render('posts/search', {

@@ -32,7 +32,7 @@ router.get('/:title', (req, res, next) => {
     userLogged = true;
   }
 
-  Post.find( {"categories" : {$in: [req.params.title] }}, (err, posts) => {
+  Post.find( {"categories" : {$in: [req.params.title] }}, null, {sort: { created_at: -1 }}, (err, posts) => {
     Category.find({}, (err, categories) => {
       var userLogged = false;
       req.user ? userLogged = true : "";

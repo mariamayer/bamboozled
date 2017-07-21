@@ -10,7 +10,7 @@ const router  = express.Router();
 
 //Index
 router.get('/', (req, res, next) => {
-  Post.find({}, (err, post) => {
+  Post.find({} , null, {sort: { created_at: -1 }}, (err, post) => {
     if (err){ return next(err); }
 
     post.populate('_creator', (err, post) => {
