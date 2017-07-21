@@ -26,11 +26,13 @@ a {
   display: block;
   margin-bottom:10px;
 }
+
 .btn{
   border:2px solid #fff;
   background: transparent;
   border-radius: 0
 }
+
 .navbar-form .form-control{
   width:300px;
   margin-right:20px;
@@ -60,6 +62,23 @@ a {
   text-transform: uppercase;
   display: inline-block;
   margin-top:10px;
+}
+
+.fb-login{
+  color:#3B5998;
+  text-transform: uppercase;
+  border:2px solid #3B5998;
+  padding:10px;
+  margin:20px 0;
+  display: inline-block;
+}
+
+.g-login{
+  color:#d62d20;
+  text-transform: uppercase;
+  border:2px solid #d62d20;
+  padding:10px;
+  margin:20px 0;
 }
 
 /* HOME */
@@ -185,4 +204,13 @@ a {
   margin-top:40px;
   border-top:2px solid #9bd8d4;
   padding-top:40px;
+}
+
+.profile .btn{
+  border: 2px solid #000;
+  width: 50%;
+  left: 25%;
+  position: relative;
+  top: 30px;
+  margin-bottom: 20px;
 }
