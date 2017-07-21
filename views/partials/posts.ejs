@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="col-md-8 body">
-            <a href="posts/<%= post.id %>"><h1><%= post.title %></h1></a>
+            <a href="../posts/<%= post.id %>"><h1><%= post.title %></h1></a>
             <p><i class="fa fa-calendar" aria-hidden="true"></i>
               <% var date=new Date(post.created_at); %>
               <%= date.getDate(); %>-<%= (date.getMonth()+1); %>-<%= date.getFullYear(); %>
@@ -21,7 +21,7 @@
             <p><%= post.description %></p>
           </div>
           <div class="col-md-2 avatar text-center">
-            <img src="../<%= post._creator.avatar %>">
+            <img src="<%= post._creator.avatar %>">
             <p>By: <a href="../profile/<%= post._creator._id %>"><%= post._creator.name %></a></p>
           </div>
         </li>
