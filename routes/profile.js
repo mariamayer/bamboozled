@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../models/user');
 const Avatar = require('../models/avatar');
 const multer = require('multer');
-const upload = multer({ dest: './public/uploads' });
+const upload = multer({ dest: './public/images' });
 
 const router = express.Router();
 
@@ -74,12 +74,12 @@ router.post('/profile/:id', (req, res) => {
 router.post('/upload', upload.single('avatar'), (req, res) => {
     const userId = req.body.id;
     avatar = new Avatar({
-        avatarPath: `/uploads/${req.file.filename}`,
+        avatarPath: `/images/${req.file.filename}`,
         avatarName: req.file.originalname
   });
 
     const updates = {
-        avatar:  `../uploads/${req.file.filename}`,
+        avatar:  `../images/${req.file.filename}`,
     };
 
 
